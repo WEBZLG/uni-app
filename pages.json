@@ -1,0 +1,96 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "矿机",
+				"enablePullDownRefresh": false
+			}
+		}
+	    ,{
+            "path" : "pages/gold/gold",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "金币",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/extend/extend",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "推广",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/personal/personal",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人中心",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#ff4c5e",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/fpag1.png",
+				"selectedIconPath": "static/images/fpag.png",
+				"text": "矿机"
+			},
+			{
+				"pagePath": "pages/gold/gold",
+				"iconPath": "static/images/coin1.png",
+				"selectedIconPath": "static/images/coin.png",
+				"text": "金币"
+			},
+			{
+				"pagePath": "pages/extend/extend",
+				"iconPath": "static/images/extension1.png",
+				"selectedIconPath": "static/images/extension.png",
+				"text": "推广"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "static/images/my.png",
+				"selectedIconPath": "static/images/my1.png",
+				"text": "我的"
+			}
+		]
+	}
+}
