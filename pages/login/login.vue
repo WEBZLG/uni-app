@@ -118,7 +118,7 @@
 					account: this.phoneData,
 					password: this.passData,
 				}).then(res => {
-					API.setStorage(userInfo,res.data.user)
+					API.setStorage('userInfo',res.data.user)
 					uni.showToast({
 						icon: 'none',
 						title: res.message

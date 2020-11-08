@@ -92,8 +92,28 @@ const getMD5Sign = (params, token) => {
 		}
 	}
 }
+const upLoad = (formData) =>{
+	uni.chooseImage({
+		success: (chooseImageRes) => {
+			const tempFilePaths = chooseImageRes.tempFilePaths;
+			uni.uploadFile({
+				url: API_BASE_URL+'/api_upload',
+				filePath: tempFilePaths[0],
+				name: 'file',
+				formData: formData,
+				success: (uploadFileRes) => {
+					console.log(uploadFileRes.data);
+					uni.showToast({
+						title:uploadFileRes.data
+					})
+				}
+			});
+		}
+	});
+}
 export default {
-	getMD5Sign: getMD5Sign,
+	getMD5Sign,
+	upLoad,
 	// 存储
 	setStorage: (key,value) => {
 		uni.setStorage({
