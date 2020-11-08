@@ -11,25 +11,28 @@
 				<swiper-item class="swiper-item" v-for="(item, index) in tabList" :key="index">
 					<scroll-view scroll-y @scrolltolower="onreachBottom">
 						<view class="goods-list">
-							<view class="goods-item" v-for="(item,index) in data_list" :key="index">
+							<view class="goods-item" v-for="(item,index) in data_list" :key="index" v-if="isShow==true">
 								<view class="picture">
 									<image :src="item.thumb" mode="aspectFill"></image>
 								</view>
 								<view class="flex-bet">
 									<view class="descript">
 										<view class="title">{{item.mill_name}}</view>
-										<view class="price">价格:{{item.price}}</view>
-										<view class="time">时间:{{item.time}}小时</view>
+										<view v-if="current==0" class="price">价格:{{item.price}}</view>
+										<view v-if="current==0" class="time">时间:{{item.time}}小时</view>
+										<view v-if="current==1" class="price">购买时间:{{item.create_time}}</view>
+										<view v-if="current==1" class="time">剩余时间:{{item.count_down}}小时</view>
 										<view class="number">数量:{{item.count}}个</view>
 									</view>
 									<view class="">
-										<button size="mini" type="default">购买</button>
-										<!-- 	<button size="mini" type="default">加速</button>
-										<button size="mini" type="default">收货</button> -->
+										<button v-if="current==0" size="mini" type="default" @click="onBuy">购买</button>
+										<button v-if="current==1&&item.count_down>0" size="mini" type="default" @click="onSpeed">加速</button>
+										<button v-if="current==1&&item.count_down<=0" size="mini" type="default" @click="onReap">收货</button>
 									</view>
 								</view>
 							</view>
 						</view>
+						<u-empty v-if="data_list.length==0" text="暂无矿机" mode="list"></u-empty>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -63,6 +66,7 @@
 				fpga_list: [],
 				fpga_run_list: [],
 				fpga_history_list: [],
+				isShow: false
 			}
 		},
 		onLoad() {
@@ -85,9 +89,9 @@
 			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
 			// swiper滑动结束，分别设置tabs和swiper的状态
 			animationfinish(e) {
-				console.log(e)
+				this.isShow = false;
 				let current = e.detail.current;
-				if(this.current !== current){
+				if (this.current !== current) {
 					switch (current) {
 						case 0:
 							this.getlist()
@@ -105,7 +109,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				
+
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
@@ -116,6 +120,7 @@
 				API.fpga_list({}).then(res => {
 					this.fpga_list = res.data.mills
 					this.data_list = res.data.mills
+					this.isShow = true;
 				})
 			},
 			// 运行矿机
@@ -123,6 +128,7 @@
 				API.fpga_run_list({}).then(res => {
 					this.fpga_run_list = res.data.mills
 					this.data_list = res.data.mills
+					this.isShow = true;
 				})
 			},
 			// 历史矿机
@@ -130,6 +136,7 @@
 				API.fpga_history_list({}).then(res => {
 					this.fpga_history_list = res.data.mills
 					this.data_list = res.data.mills
+					this.isShow = true;
 				})
 			},
 			// 加速
@@ -138,6 +145,12 @@
 					mill_id: e
 				}).then(res => {
 					console.log(res)
+					uni.showToast({
+						title: res.message
+					})
+					setTimeout(function() {
+						this.getRunlist()
+					}, 1000)
 				})
 			},
 			// 收获
@@ -145,8 +158,40 @@
 				API.fpga_reap({
 					mill_id: e
 				}).then(res => {
-					console.log(res)
+					uni.showToast({
+						title: res.message
+					})
+					setTimeout(function() {
+						this.getRunlist()
+					}, 1000)
 				})
+			},
+			// 购买
+			onBuy(e) {
+				uni.showModal({
+					title: '购买提示',
+					content: '确定购买此矿机？',
+					success: function(res) {
+						if (res.confirm) {
+							API.fpga_buy({
+								mill_id: e
+							}).then(res => {
+								console.log(res)
+								uni.showToast({
+									title: res.message
+								})
+								setTimeout(function() {
+									this.getlist()
+								}, 1000)
+							})
+						} else if (res.cancel) {
+							uni.showToast({
+								title: res.message
+							})
+						}
+					}
+				});
+
 			}
 
 		}
@@ -195,21 +240,24 @@
 			margin-bottom: 20rpx;
 
 			.descript {
-				line-height: 48rpx;
 				color: #999999;
 
 				.title {
-					font-size: 32rpx;
+					font-size: 28rpx;
 					color: #000000;
 					font-weight: bold;
 				}
 
-				.number {}
+				.price,
+				.number,
+				.time {
+					font-size: 24rpx;
+				}
 			}
 
 			.picture {
-				width: 200rpx;
-				height: 200rpx;
+				width: 140rpx;
+				height: 140rpx;
 				display: block;
 				border-radius: 20rpx;
 				overflow: hidden;

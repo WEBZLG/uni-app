@@ -94,6 +94,29 @@ const getMD5Sign = (params, token) => {
 }
 export default {
 	getMD5Sign: getMD5Sign,
+	// 存储
+	setStorage: (key,value) => {
+		uni.setStorage({
+		    key: key,
+		    data: value,
+		    success: function () {
+		        console.log('success');
+		    }
+		});
+	},
+	// 获取存储
+	getStorage: (key) => {
+		let info;
+		uni.getStorage({
+			key:key,
+			success: function (res) {
+				console.log(res.data);
+				info = res.data
+			}
+		});
+		return info
+	},
+
 	// 注册
 	regist: (data) => {
 		return request('/register', 'post', data, true, true)
@@ -133,6 +156,10 @@ export default {
 	//收获矿机
 	fpga_reap: (data) => {
 		return request('/mill/reap', 'post', data)
+	},
+	//购买矿机
+	fpga_buy: (data) => {
+		return request('/mill/buy', 'post', data)
 	},
 
 

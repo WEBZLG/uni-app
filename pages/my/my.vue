@@ -2,11 +2,11 @@
 	<view class="u-skeleton">
 		<view class="u-flex user-box u-p-t-30 u-p-l-30 u-p-r-20 u-p-b-30" @click="onPersonal">
 			<view class="u-m-r-10">
-				<u-avatar :src="pic" size="140"></u-avatar>
+				<u-avatar :src="userInfo.avatar" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
-				<view class="u-font-18 u-p-b-20">uView ui</view>
-				<view class="u-font-14 u-tips-color">微信号:helang_uView</view>
+				<view class="u-font-18 u-p-b-20">{{userInfo.user_name}}</view>
+				<view class="u-font-14 u-tips-color">邀请码:{{userInfo.p_code}}</view>
 			</view>
 <!-- 			<view class="u-m-l-10 u-p-10">
 				<u-icon name="scan" color="#969799" size="28"></u-icon>
@@ -42,15 +42,18 @@
 </template>
 
 <script>
+	import API from '../../common/api.js'
 	export default {
 		data() {
 			return {
-				pic:'https://uviewui.com/common/logo.png',
 				show:true,
 				loading: true, // 是否显示骨架屏组件
+				userInfo:''
 			}
 		},
 		onLoad() {
+			this.userInfo = API.getStorage('userInfo')
+			console.log(this.userInfo)
 			// 通过延时模拟向后端请求数据，调隐藏骨架屏
 			setTimeout(() => {
 				this.loading = false;

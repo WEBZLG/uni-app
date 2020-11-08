@@ -42,9 +42,9 @@
 			
 			<!-- 底部信息 -->
 			<view class="footer">
-				<navigator url="forget" open-type="navigate">找回密码</navigator>
+				<navigator url="./forget" open-type="navigate">找回密码</navigator>
 				<text>|</text>
-				<navigator url="register" open-type="navigate">注册账号</navigator>
+				<navigator url="./register" open-type="navigate">注册账号</navigator>
 			</view>
 		</view>
 	</view>
@@ -118,23 +118,16 @@
 					account: this.phoneData,
 					password: this.passData,
 				}).then(res => {
-					uni.setStorage({
-					    key: 'userInfo',
-					    data: res.data.user,
-					    success: function () {
-					        console.log('success');
-					    }
-					});
+					API.setStorage(userInfo,res.data.user)
 					uni.showToast({
 						icon: 'none',
-						position: 'bottom',
 						title: res.message
 					});
 					_this.isRotate = true
 					setTimeout(function() {
 						_this.isRotate = false
 						uni.reLaunch({
-							url: "../fpga/fpga"
+							url: "../index/index"
 						})
 					}, 3000)
 				})

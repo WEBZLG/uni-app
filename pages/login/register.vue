@@ -137,23 +137,16 @@
 					password: this.passData,
 					p_code: this.p_code
 				}).then(res => {
-					uni.setStorage({
-					    key: 'userInfo',
-					    data: res.data.user,
-					    success: function () {
-					        console.log('success');
-					    }
-					});
+					API.setStorage(userInfo,res.data.user)
 					uni.showToast({
 						icon: 'none',
-						position: 'bottom',
 						title: res.message
 					});
 					_this.isRotate = true
 					setTimeout(function() {
 						_this.isRotate = false
 						uni.reLaunch({
-							url: "../fpga/fpga"
+							url: "../index/index"
 						})
 					}, 3000)
 				})

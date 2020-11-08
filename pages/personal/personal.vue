@@ -34,7 +34,9 @@
 		width: 100%;
 	}
 .head{
-	height: 80rpx;
-	width: 80rpx;
+	height: 60rpx;
+	width: 60rpx;
+	display: inline-block;
+	vertical-align: middle;
 }
 </style>
