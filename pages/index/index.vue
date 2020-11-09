@@ -186,7 +186,7 @@
 							})
 						} else if (res.cancel) {
 							uni.showToast({
-								title: res.message
+								title: '已取消'
 							})
 						}
 					}

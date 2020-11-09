@@ -181,6 +181,10 @@ export default {
 	fpga_buy: (data) => {
 		return request('/mill/buy', 'post', data)
 	},
+	//修改用户名
+	changeName: (data) => {
+		return request('/user/set_user_name', 'post', data)
+	},
 
 
 }
