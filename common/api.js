@@ -92,45 +92,63 @@ const getMD5Sign = (params, token) => {
 		}
 	}
 }
-const upLoad = (formData) =>{
-	uni.chooseImage({
-		success: (chooseImageRes) => {
-			const tempFilePaths = chooseImageRes.tempFilePaths;
-			uni.uploadFile({
-				url: API_BASE_URL+'/api_upload',
-				filePath: tempFilePaths[0],
-				name: 'file',
-				formData: formData,
-				success: (uploadFileRes) => {
-					console.log(uploadFileRes.data);
-					uni.showToast({
-						title:uploadFileRes.data
-					})
-				}
-			});
-		}
-	});
+const upLoadChoose = (formData) => {
+	return new Promise((resolve, reject) => {
+		uni.chooseImage({
+			success: (chooseImageRes) => {
+				const tempFilePaths = chooseImageRes.tempFilePaths;
+				uni.uploadFile({
+					url: API_BASE_URL + '/api_upload',
+					filePath: tempFilePaths[0],
+					name: 'file',
+					formData: formData,
+					success: (uploadFileRes) => {
+						resolve(uploadFileRes.data)
+					},
+					error:(err)=>{
+						reject(err.message)
+					}
+				});
+			}
+		});
+	})
+}
+const upLoad = (path) => {
+	return new Promise((resolve, reject) => {
+		uni.uploadFile({
+			url: API_BASE_URL + '/api_upload',
+			filePath: path,
+			name: 'file',
+			success: (uploadFileRes) => {
+				resolve(uploadFileRes.data)
+			},
+			error: (res) => {
+				reject(res)
+			}
+		});
+	})
 }
 export default {
+	API_BASE_URL,
 	getMD5Sign,
 	upLoad,
+	upLoadChoose,
 	// 存储
-	setStorage: (key,value) => {
+	setStorage: (key, value) => {
 		uni.setStorage({
-		    key: key,
-		    data: value,
-		    success: function () {
-		        console.log('success');
-		    }
+			key: key,
+			data: value,
+			success: function() {
+				console.log('success');
+			}
 		});
 	},
 	// 获取存储
 	getStorage: (key) => {
 		let info;
 		uni.getStorage({
-			key:key,
-			success: function (res) {
-				console.log(res.data);
+			key: key,
+			success: function(res) {
 				info = res.data
 			}
 		});
@@ -184,6 +202,18 @@ export default {
 	//修改用户名
 	changeName: (data) => {
 		return request('/user/set_user_name', 'post', data)
+	},
+	//修改密码
+	changePassword: (data) => {
+		return request('/user/set_pass', 'post', data)
+	},
+	//修改手机号
+	changeMobile: (data) => {
+		return request('/user/set_mobile', 'post', data)
+	},
+	//修改头像
+	changeAvatar: (data) => {
+		return request('/user/set_avatar', 'post', data)
 	},
 
 

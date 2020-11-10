@@ -74,6 +74,40 @@
             
         }
         
+        ,{
+            "path" : "pages/changeMobile/changeMobile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改手机号",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/realName/realName",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "实名认证",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
+			}
+		}
+        ,{
+            "path" : "pages/withdrawApply/withdrawApply",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "申请提现",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
