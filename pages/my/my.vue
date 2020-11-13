@@ -8,9 +8,6 @@
 				<view class="u-font-18 u-p-b-20">{{userInfo.user_name}}</view>
 				<view class="u-font-14 u-tips-color">邀请码:{{userInfo.p_code}}</view>
 			</view>
-<!-- 			<view class="u-m-l-10 u-p-10">
-				<u-icon name="scan" color="#969799" size="28"></u-icon>
-			</view> -->
 			<view class="u-m-l-10 u-p-10">
 				<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
 			</view>
@@ -24,7 +21,7 @@
 		
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="red-packet" title="我的账单"></u-cell-item>
+				<u-cell-item icon="red-packet" title="我的账单" @click="onWithdrawal"></u-cell-item>
 			</u-cell-group>
 		</view>
 		
@@ -60,6 +57,11 @@
 			onPersonal(){
 				uni.navigateTo({
 					url:'../personal/personal'
+				})
+			},
+			onWithdrawal(){
+				uni.navigateTo({
+					url:'../withdrawal/withdrawal'
 				})
 			}
 		}

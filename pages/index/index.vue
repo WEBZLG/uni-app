@@ -5,37 +5,36 @@
 		</view>
 		<view class="tab-bar">
 			<view>
-				<u-tabs-swiper ref="uTabs" :list="tabList" :current="current" @change="tabsChange" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
+				<!-- <u-tabs-swiper ref="uTabs" :list="tabList" :current="current" @change="tabsChange" :is-scroll="false" swiperWidth="750"></u-tabs-swiper> -->
+				<u-tabs :list="tabList" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			</view>
-			<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish" class="swiper-box">
-				<swiper-item class="swiper-item" v-for="(item, index) in tabList" :key="index">
-					<scroll-view scroll-y @scrolltolower="onreachBottom">
-						<view class="goods-list">
-							<view class="goods-item" v-for="(item,index) in data_list" :key="index" v-if="isShow==true">
-								<view class="picture">
-									<image :src="item.thumb" mode="aspectFill"></image>
+			<view class="">
+				<scroll-view scroll-y @scrolltolower="onreachBottom">
+					<view class="goods-list">
+						<view class="goods-item" v-for="(item,index) in data_list" :key="index" v-if="isShow==true">
+							<view class="picture">
+								<image :src="item.thumb" mode="aspectFill"></image>
+							</view>
+							<view class="flex-bet">
+								<view class="descript">
+									<view class="title">{{item.mill_name}}</view>
+									<view v-if="current==0" class="price">价格:{{item.price}}</view>
+									<view v-if="current==0" class="time">时间:{{item.time}}小时</view>
+									<view v-if="current==1" class="price">购买时间:{{item.create_time}}</view>
+									<view v-if="current==1" class="time">剩余时间:{{item.count_down}}小时</view>
+									<view class="number">数量:{{item.count}}个</view>
 								</view>
-								<view class="flex-bet">
-									<view class="descript">
-										<view class="title">{{item.mill_name}}</view>
-										<view v-if="current==0" class="price">价格:{{item.price}}</view>
-										<view v-if="current==0" class="time">时间:{{item.time}}小时</view>
-										<view v-if="current==1" class="price">购买时间:{{item.create_time}}</view>
-										<view v-if="current==1" class="time">剩余时间:{{item.count_down}}小时</view>
-										<view class="number">数量:{{item.count}}个</view>
-									</view>
-									<view class="">
-										<button v-if="current==0" size="mini" type="default" @click="onBuy">购买</button>
-										<button v-if="current==1&&item.count_down>0" size="mini" type="default" @click="onSpeed">加速</button>
-										<button v-if="current==1&&item.count_down<=0" size="mini" type="default" @click="onReap">收货</button>
-									</view>
+								<view class="">
+									<button v-if="current==0" size="mini" type="default" @click="onBuy">购买</button>
+									<button v-if="current==1&&item.count_down>0" size="mini" type="default" @click="onSpeed">加速</button>
+									<button v-if="current==1&&item.count_down<=0" size="mini" type="default" @click="onReap">收货</button>
 								</view>
 							</view>
 						</view>
-						<u-empty v-if="data_list.length==0" text="暂无矿机" mode="list"></u-empty>
-					</scroll-view>
-				</swiper-item>
-			</swiper>
+					</view>
+					<u-empty v-if="data_list.length==0" text="暂无矿机" mode="list"></u-empty>
+				</scroll-view>
+			</view>
 		</view>
 		<!--骨架组件-->
 		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
@@ -59,7 +58,6 @@
 				}],
 				// 因为内部的滑动机制限制，请将tabs组件和swiper组件的current用不同变量赋值
 				current: 0, // tabs组件的current值，表示当前活动的tab选项
-				swiperCurrent: 0, // swiper组件的current值，表示当前那个swiper-item是活动的
 				loading: true, // 是否显示骨架屏组件
 				activeTab: 0,
 				data_list: [],
@@ -77,40 +75,24 @@
 			}, 2000)
 		},
 		methods: {
-			// tabs通知swiper切换
+			// tabs通知
 			tabsChange(index) {
-				this.swiperCurrent = index;
-			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
-			transition(e) {
-				let dx = e.detail.dx;
-				this.$refs.uTabs.setDx(dx);
-			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
-			animationfinish(e) {
-				this.isShow = false;
-				let current = e.detail.current;
-				if (this.current !== current) {
-					switch (current) {
-						case 0:
-							this.getlist()
-							break;
-						case 1:
-							this.getRunlist()
-							break;
-						case 2:
-							this.getHistorylist()
-							break;
-						default:
-							break;
-					}
+				this.current = index
+				switch (index) {
+					case 0:
+						this.getlist()
+						break;
+					case 1:
+						this.getRunlist()
+						break;
+					case 2:
+						this.getHistorylist()
+						break;
+					default:
+						break;
 				}
-				this.$refs.uTabs.setFinishCurrent(current);
-				this.swiperCurrent = current;
-				this.current = current;
-
 			},
+
 			// scroll-view到底部加载更多
 			onreachBottom() {
 
