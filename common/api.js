@@ -215,6 +215,18 @@ export default {
 	changeAvatar: (data) => {
 		return request('/user/set_avatar', 'post', data)
 	},
+	//申请提现
+	withdrawApply: (data) => {
+		return request('/withdraw/create', 'post', data)
+	},
+	//提现记录
+	withdrawList: (data) => {
+		return request('/withdraw/get_list', 'post', data)
+	},
+	//金额变动
+	moneyChange: (data) => {
+		return request('/user/get_balance_log', 'post', data)
+	},
 
 
 }

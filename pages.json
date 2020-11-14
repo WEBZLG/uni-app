@@ -112,8 +112,26 @@
             "path" : "pages/withdrawal/withdrawal",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "我的账单",
                 "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/withdrawList/withdrawList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现记录",
+                "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/amountChange/amountChange",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "金额变动",
+                "enablePullDownRefresh": true
             }
             
         }

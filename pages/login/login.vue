@@ -28,7 +28,7 @@
 			></wButton>
 			
 			<!-- 其他登录 -->
-			<view class="other_login cuIcon">
+<!-- 			<view class="other_login cuIcon">
 				<view class="login_icon">
 					<view class="cuIcon-weixin" @tap="login_weixin"></view>
 				</view>
@@ -38,7 +38,7 @@
 				<view class="login_icon">
 					<view class="cuIcon-github" @tap="login_github"></view>
 				</view>
-			</view>
+			</view> -->
 			
 			<!-- 底部信息 -->
 			<view class="footer">

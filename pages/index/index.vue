@@ -32,7 +32,7 @@
 							</view>
 						</view>
 					</view>
-					<u-empty v-if="data_list.length==0" text="暂无矿机" mode="list"></u-empty>
+					<u-empty v-if="data_list.length==0" text="暂无矿机" mode="list" margin-top="300"></u-empty>
 				</scroll-view>
 			</view>
 		</view>
@@ -248,5 +248,8 @@
 				position: relative;
 			}
 		}
+	}
+	.u-empty {
+		margin-top: 50%;
 	}
 </style>

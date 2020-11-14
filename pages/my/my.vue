@@ -15,7 +15,7 @@
 		
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="account" title="申请实名"></u-cell-item>
+				<u-cell-item icon="account" title="申请实名" @click="onNaming"></u-cell-item>
 			</u-cell-group>
 		</view>
 		
@@ -62,6 +62,11 @@
 			onWithdrawal(){
 				uni.navigateTo({
 					url:'../withdrawal/withdrawal'
+				})
+			},
+			onNaming(){
+				uni.navigateTo({
+					url:'../realName/realName'
 				})
 			}
 		}
