@@ -77,7 +77,6 @@
 			},
 			// 获取验证码
 			getCode() {
-
 				if (this.$refs.uCode.canGetCode) {
 					if (this.isNew) {
 						this.setMobile('new', this.form.phone, '', 'get_code', function() {

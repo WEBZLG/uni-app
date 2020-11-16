@@ -74,7 +74,8 @@
 </script>
 
 <style lang="scss">
-page{
+page,
+.u-skeleton{
 	background-color: #ededed;
 }
 
